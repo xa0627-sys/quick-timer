@@ -11,6 +11,39 @@ delay = 60000
 audio-remind = null
 audio-end = null
 
+pad-left = (num, size) ->
+  s = num.toString!
+  while s.length < size
+    s = '0' + s
+  s
+
+format-time = (ms) ->
+  total = Math.floor ms
+  mins = Math.floor total / 60000
+  secs = Math.floor (total % 60000) / 1000
+  millis = Math.floor total % 1000
+  minutes: pad-left mins, 2
+  seconds: pad-left secs, 2
+  millis: pad-left millis, 3
+
+render-time = (ms) ->
+  parts = format-time ms
+  html = "<span class=\"timer-minutes\">#{parts.minutes}</span>"
+  html += "<span class=\"timer-sep\">:</span>"
+  html += "<span class=\"timer-seconds\">#{parts.seconds}</span>"
+  html += "<span class=\"timer-sep\">:</span>"
+  html += "<span class=\"timer-millis\">#{parts.millis}</span>"
+  $ \#timer .html html
+
+set-blink-classes = (enabled) ->
+  tm = $ \#timer
+  if enabled
+    tm.toggleClass \blink-light, is-light
+    tm.toggleClass \blink-dark, !is-light
+  else
+    tm.removeClass \blink-light
+    tm.removeClass \blink-dark
+
 new-audio = (file) ->
   node = new Audio!
     ..src = file
@@ -34,7 +67,7 @@ adjust = (it,v) ->
   delay := delay + it * 1000
   if it==0 => delay := v * 1000
   if delay <= 0 => delay := 0
-  $ \#timer .text delay
+  render-time delay
   resize!
 
 toggle = ->
@@ -63,15 +96,15 @@ reset = ->
   toggle!
   if handler => clearInterval handler
   handler := null
-  $ \#timer .text delay
-  $ \#timer .css \color, \#fff
+  set-blink-classes false
+  render-time delay
   resize!
 
 
 blink = ->
   is-blink := true
   is-light := !is-light
-  $ \#timer .css \color, if is-light => \#fff else \#f00
+  set-blink-classes true
 
 count = ->
   tm = $ \#timer
@@ -87,7 +120,8 @@ count = ->
     diff = 0
     clearInterval handler
     handler := setInterval ( -> blink!), 500
-  tm.text "#{diff}"
+  if !is-blink => set-blink-classes false
+  render-time diff
   resize!
 
 run =  ->
@@ -110,7 +144,7 @@ resize = ->
 
 
 window.onload = ->
-  $ \#timer .text delay
+  render-time delay
   resize!
   #audio-remind := new-audio \audio/cop-car.mp3
   #audio-end := new-audio \audio/fire-alarm.mp3
