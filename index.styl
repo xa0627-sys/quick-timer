@@ -15,10 +15,21 @@ html, body
   height: 100%
   line-height: 100%
   background: #000
-  color: #fff
   text-align: center
   font-weight: 700
   font-family: century gothic
+  .timer-minutes
+    color: #64b5f6
+  .timer-seconds
+    color: #81c784
+  .timer-millis
+    color: #ffb74d
+  .timer-sep
+    color: #e0e0e0
+  &.blink-light span
+    color: #fff
+  &.blink-dark span
+    color: #f00
 
 #hide, #toggle, #reset, #min10, #min60, #add10, #add60, #def10, #def30, #def60, #def180, #def300, #def600, #def900, #def1800
   position: absolute

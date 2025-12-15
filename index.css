@@ -1,5 +1,4 @@
-html,
-body {
+html, body {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -11,31 +10,36 @@ body {
   -ms-user-select: none;
   user-select: none;
 }
+
 #timer {
   width: 100%;
   height: 100%;
   line-height: 100%;
   background: #000;
-  color: #fff;
   text-align: center;
   font-weight: 700;
   font-family: century gothic;
 }
-#hide,
-#toggle,
-#reset,
-#min10,
-#min60,
-#add10,
-#add60,
-#def10,
-#def30,
-#def60,
-#def180,
-#def300,
-#def600,
-#def900,
-#def1800 {
+#timer .timer-minutes {
+  color: #64b5f6;
+}
+#timer .timer-seconds {
+  color: #81c784;
+}
+#timer .timer-millis {
+  color: #ffb74d;
+}
+#timer .timer-sep {
+  color: #e0e0e0;
+}
+#timer.blink-light span {
+  color: #fff;
+}
+#timer.blink-dark span {
+  color: #f00;
+}
+
+#hide, #toggle, #reset, #min10, #min60, #add10, #add60, #def10, #def30, #def60, #def180, #def300, #def600, #def900, #def1800 {
   position: absolute;
   top: 5px;
   left: 50%;
@@ -51,20 +55,10 @@ body {
   margin-left: -30px;
   width: 70px;
 }
-#min10,
-#min60,
-#add10,
-#add60 {
+#min10, #min60, #add10, #add60 {
   width: 50px;
 }
-#def10,
-#def30,
-#def60,
-#def180,
-#def300,
-#def600,
-#def900,
-#def1800 {
+#def10, #def30, #def60, #def180, #def300, #def600, #def900, #def1800 {
   bottom: 5px;
   top: auto;
   width: 70px;
